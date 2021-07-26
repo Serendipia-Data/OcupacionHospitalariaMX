@@ -8,6 +8,9 @@ Información de ocupación hospitalaria en México, Secretaría de Salud. Obteni
 
 ## Datos
 Los datos descargados están en la carpeta especificada en la linea 18, actualmente la carpeta "Descargas" de tu ordenador. 
+```python
+folder_of_download = "/Users/yarel/Downloads/"
+```
 
 ## Descarga de datos via chromedriver
 
@@ -20,7 +23,7 @@ driver = webdriver.Chrome(ChromeDriverManager(version="91.0.4472.19").install(),
 driver.get("https://www.google.com")
 ```
 
-donde `driver` es el controlador necesario para la descarga con Chrome. Para seleccionar las fechas de descarga:  `descargar_desde`y `descargar_hasta` son las fechas en formato `año-mes-día`r. 
+donde `driver` es el controlador necesario para la descarga con Chrome. Para seleccionar las fechas de descarga:  `descargar_desde`y `descargar_hasta` son las fechas en formato `año-mes-día`. 
 
 **Ojo** Se recomeinda decargar por rangos cortos de fechas para evitar errores en carga. 
 
