@@ -11,15 +11,18 @@ import pandas as pd
 import os
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
+from webdriver_manager.chrome import ChromeDriverManager
 import time
-    
+
  
-folder_of_download = "/Users/rod/Dropbox/DashboardCONACYT/data"
-direccion_chromedriver = '/Users/rod/Dropbox/DashboardCONACYT/chromedriver'
-descargar_desde = "2020-04-01"
-descargar_hasta = "2020-04-05"
-sleep_time    = 10 #Tiempo que tarda la página de la UNAM de cambiar ventana
-download_time = 2  #Tiempo que tarda en descargarse el archivo en tu red
+folder_of_download = "/Users/yarel/Downloads/"
+
+#direccion_chromedriver = '/Users/yarel/Documents/Proyectos/serendipia/CapacidadHospitalaria/chromedriver.exe'
+descargar_desde = "2021-07-22"
+descargar_hasta = "2021-07-25"
+sleep_first = 15
+sleep_time    = 90 #Tiempo que tarda la página de la UNAM de cambiar ventana
+download_time = 4  #Tiempo que tarda en descargarse el archivo en tu red
 
 """
 #Funcion para obtener las tarjetas de resumen
@@ -42,12 +45,16 @@ option.add_experimental_option("prefs", {
         "safebrowsing.enabled": False
 })
 
-browser = webdriver.Chrome(executable_path=direccion_chromedriver, options=option)
+driver = webdriver.Chrome(ChromeDriverManager(version="91.0.4472.19").install(), options=option)
+driver.get("https://www.google.com")
+
+#browser = webdriver.Chrome(executable_path=direccion_chromedriver, options=option)
+browser = driver
 browser.set_window_size(1000,1000)
 browser.get("https://www.gits.igg.unam.mx/red-irag-dashboard/reviewHome#")
 
 #Dar click en entrar
-time.sleep(sleep_time)
+time.sleep(sleep_first)
 browser.find_element_by_id('enter-button').click()
 
 #Fechas a descargar
@@ -60,9 +67,9 @@ print("Tiempo estimado: " + str(len(fechas_descargar)*(sleep_time*4 + 4*download
 
 #Elementos de resumen, ocupación general, camas y uci
 resumen    = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[1]/a")
-hospital   = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[4]/a")
-ventilador = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[5]/a")
-uci        = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[6]/a")
+hospital   = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[5]/a")
+ventilador = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[6]/a")
+uci        = browser.find_element_by_xpath("/html/body/section/section[2]/div[1]/nav/ul/li[7]/a")
 
 #Avance para cuantificar
 avance = 0
@@ -74,7 +81,7 @@ for fecha_analisis in fechas_descargar:
     
     #Asegurarnos que estamos en la sección resumen
     resumen.click()
-    time.sleep(sleep_time)
+    time.sleep(sleep_first)
         
     select = Select(browser.find_element_by_id("dateSelected"))
     select.select_by_visible_text(fecha_analisis)
@@ -122,7 +129,19 @@ for fecha_analisis in fechas_descargar:
     hospital.click()
     time.sleep(sleep_time)
      
+    # --- descarga a nivel unidad médica ---
     browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[5]/div/div[1]/button[1]").click()
+    
+    newname = "Hospitalizaciones_" + fecha_analisis + "_UM.csv"
+    time.sleep(download_time)
+    os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
+    
+    
+    # --- descarga a nivel unidad Estatal ---
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/nav/ul/li[1]/a").click()
+    time.sleep(sleep_first)
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[2]/div/div[1]/button[1]").click()
+    
     newname = "Hospitalizaciones_" + fecha_analisis + ".csv"
     time.sleep(download_time)
     os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
@@ -134,7 +153,18 @@ for fecha_analisis in fechas_descargar:
     ventilador.click()
     time.sleep(sleep_time)
 
+    # --- descarga a nivel unidad médica ---
     browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[5]/div/div[1]/button[1]").click()
+    
+    newname = "Ventiladores_" + fecha_analisis + "_UM.csv"
+    time.sleep(download_time)
+    os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
+    
+    # --- descarga a nivel unidad Estatal ---
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/nav/ul/li[1]/a").click()
+    time.sleep(sleep_first)
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[2]/div/div[1]/button[1]").click()
+    
     newname = "Ventiladores_" + fecha_analisis + ".csv"
     time.sleep(download_time)
     os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
@@ -145,8 +175,20 @@ for fecha_analisis in fechas_descargar:
     
     uci.click()
     time.sleep(sleep_time)
-
+    
+    # --- descarga a nivel unidad médica ---
     browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[5]/div/div[1]/button[1]").click()
+    
+    newname = "UCI_" + fecha_analisis + "_UM.csv"
+    time.sleep(download_time)
+    os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
+    
+    
+    # --- descarga a nivel unidad Estatal ---
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/nav/ul/li[1]/a").click()
+    time.sleep(sleep_first)
+    browser.find_element_by_xpath("/html/body/section/section[2]/div[2]/section/article[2]/article/div[1]/div/div[2]/div/div[1]/button[1]").click()
+    
     newname = "UCI_" + fecha_analisis + ".csv"
     time.sleep(download_time)
     os.rename(os.path.join(folder_of_download, "Sistema de Información de la Red IRAG.csv"), os.path.join(folder_of_download, newname))
