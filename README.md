@@ -16,6 +16,8 @@ Los datos que descarga son los correspondientes a Ocupación Hospitalaria a nive
 
 [Lee más aqui](https://serendipia.digital/covid-19/datos-sobre-ocupacion-hospitalaria-en-mexico-no-son-replicables/)
 
+También puedes encontrar todos los datos descargados hasta la fecha y los concentrados para su análisis [aquí](https://archivos.serendipiadata.com/ocupacion/)
+
 ## Descarga de datos via chromedriver
 
 Si deseas descargar los datos por ti misma, el archivo `descarga_datos.py` contiene el webscrapper para entrar al portal y bajar los datos de manera automática. 
