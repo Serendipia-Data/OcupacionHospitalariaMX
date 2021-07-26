@@ -18,7 +18,7 @@ import time
 folder_of_download = "/Users/yarel/Downloads/"
 
 #direccion_chromedriver = '/Users/yarel/Documents/Proyectos/serendipia/CapacidadHospitalaria/chromedriver.exe'
-descargar_desde = "2021-07-22"
+descargar_desde = "2021-07-25"
 descargar_hasta = "2021-07-25"
 sleep_first = 15
 sleep_time    = 90 #Tiempo que tarda la página de la UNAM de cambiar ventana
