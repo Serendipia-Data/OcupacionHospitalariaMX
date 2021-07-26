@@ -12,6 +12,10 @@ Los datos descargados están en la carpeta especificada en la linea 18, actualme
 folder_of_download = "/Users/yarel/Downloads/"
 ```
 
+Los datos que descarga son los correspondientes a Ocupación Hospitalaria a nivel estatal y a nivel Unidad Médica ya que la SSa publica los porcentajes con redondeos y no coinciden los cálculos a nivel UM comparando con los totales a nivel Estatal.
+
+[Lee más aqui](https://serendipia.digital/covid-19/datos-sobre-ocupacion-hospitalaria-en-mexico-no-son-replicables/)
+
 ## Descarga de datos via chromedriver
 
 Si deseas descargar los datos por ti misma, el archivo `descarga_datos.py` contiene el webscrapper para entrar al portal y bajar los datos de manera automática. 
