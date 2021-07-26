@@ -3,6 +3,9 @@
 El presente repositorio contiene los datos de capacidad hospitalaria divulgados por la Secretaría de Salud a través del portal de la UNAM
 [https://www.gits.igg.unam.mx/red-irag-dashboard/reviewHome#](https://www.gits.igg.unam.mx/red-irag-dashboard/reviewHome#)
 
+# Primera versión de script
+Información de ocupación hospitalaria en México, Secretaría de Salud. Obtenidas en su mayoría a través de CapacidadHospitalariaMX: por [@RodrigoZepeda](https://github.com/RodrigoZepeda/CapacidadHospitalariaMX)
+
 ## Datos
 Los datos descargados están en la carpeta [`data/`](https://github.com/RodrigoZepeda/CapacidadHospitalariaMX/tree/master/data). 
 
