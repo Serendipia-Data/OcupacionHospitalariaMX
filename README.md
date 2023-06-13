@@ -36,4 +36,5 @@ donde `driver` es el controlador necesario para la descarga con Chrome. Para sel
 
 ---
 Actualizado agosto 2022 por [Marco2309](https://github.com/Marco2309) 💻
-Modificado por [Yarelosa](https://github.com/Yarelosa) 😊
+
+Modificado 2021 por [Yarelosa](https://github.com/Yarelosa) 😊
